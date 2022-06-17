@@ -15,7 +15,7 @@ driver.get("https://fruitshoppe.firebaseapp.com")
 driver.implicitly_wait(5)
 
 from selenium.webdriver.common.by import By
-#Find Mangocados on the screen using it's xpath valye and then click on it
+#Find Mangocados on the screen using it's xpath value and then click on it
 fruitfromhomepage = driver.find_element(By.XPATH, "/html/body/div[3]/div/div/div/div/div[1]/div/div/a")
 fruitfromhomepage.click()
 #print(fruitfromhomepage)
