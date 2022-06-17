@@ -20,7 +20,7 @@ fruitfromhomepage = driver.find_element(By.XPATH, ("//div[@class='featured-fruit
 fruitfronthomepagetext = driver.find_element(By.XPATH, ("//div[@class='featured-fruit-info']")).text
 fruitfromhomepage.click()
 
-#The click above loads the Market, here I want to click on Bananas and add it the cart
+#The click above loads the Market, add bananas to the cart
 fruitfrommarketpage = driver.find_element(By.XPATH, ("//div[@class='fruit-box fruit-banans']/../../..//a[@class='btn btn-sm btn-primary cta-add-to-cart']"))
 fruitfrommarketpagetext = driver.find_element(By.XPATH, ("//div[@class='fruit-box fruit-banans']/div/h3/a")).text
 fruitfrommarketpage.click()
@@ -29,7 +29,7 @@ fruitfrommarketpage.click()
 cart = driver.find_element(By.XPATH, "//span[text()='My Cart']")
 cart.click()
 
-#go through the list and find the items on the page and compare to what I added to the cart
+#go through the list of items on the cart screen and compare to what the user added to the cart from the homepage and market page
 cartitems = driver.find_elements(By.XPATH, ("//ul[@class='cart-list ng-scope']/li[@class='cart-list-item ng-scope']"))
 i = 1
 found = 0
