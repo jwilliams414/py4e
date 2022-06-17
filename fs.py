@@ -15,23 +15,31 @@ driver.get("https://fruitshoppe.firebaseapp.com")
 driver.implicitly_wait(5)
 
 from selenium.webdriver.common.by import By
-#Find Mangocados on the screen using it's xpath value and then click on it
-fruitfromhomepage = driver.find_element(By.XPATH, "/html/body/div[3]/div/div/div/div/div[1]/div/div/a")
+#Add the first listed featured fruit to the user's cart
+fruitfromhomepage = driver.find_element(By.XPATH, ("//div[@class='featured-fruit-info']"))
+fruitfronthomepagetext = driver.find_element(By.XPATH, ("//div[@class='featured-fruit-info']")).text
 fruitfromhomepage.click()
-#print(fruitfromhomepage)
-#The click loads the Market, click on Bananas - find bananas on the screen using its xpath
-fruitfrommarketpage = driver.find_element(By.XPATH, "/html/body/div[3]/div/div/div/div[2]/div[1]/div/div[3]/div/div[2]/a")
+
+#The click above loads the Market, here I want to click on Bananas and add it the cart
+fruitfrommarketpage = driver.find_element(By.XPATH, ("//div[@class='fruit-box fruit-banans']/../../..//a[@class='btn btn-sm btn-primary cta-add-to-cart']"))
+fruitfrommarketpagetext = driver.find_element(By.XPATH, ("//div[@class='fruit-box fruit-banans']/div/h3/a")).text
 fruitfrommarketpage.click()
-#print (fruitfrommarketpage)
-#Find the cart button by using it's xpath and then click on it
-cart = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[2]/a[3]/span[1]")
+
+#Find the cart button by using it's xpath and the text My Cart and then click on it
+cart = driver.find_element(By.XPATH, "//span[text()='My Cart']")
 cart.click()
-#print(cart)
-#Find the values of both fruits in the cart using xpath
-fruitincart = (driver.find_element(By.XPATH, "/html/body/div[3]/div/div/ul/li[2]/div/div[1]").text)
-print (fruitincart)
-secondfruitincart = (driver.find_element(By.XPATH, "/html/body/div[3]/div/div/ul/li[3]/div/div[1]").text)
-print (secondfruitincart)
-#Ensure the text values of the fruits match what was added to the cart and then deliever a success message
-if (fruitincart == 'Mangocados') and (secondfruitincart == 'Bananas'):
-    print ('Yay! Capture script correctly captured both fruits added to the cart')
+
+#go through the list and find the items on the page and compare to what I added to the cart
+cartitems = driver.find_elements(By.XPATH, ("//ul[@class='cart-list ng-scope']/li[@class='cart-list-item ng-scope']"))
+i = 1
+found = 0
+while i <= len(cartitems):
+    fruitincart = (driver.find_element(By.XPATH, "//ul[@class='cart-list ng-scope']/li[@class='cart-list-item ng-scope']["+str(i)+"]/div/div").text)
+    #print(fruitincart)
+    if (fruitincart.lower() == fruitfronthomepagetext.lower()):
+        found += 1
+    elif (fruitincart.lower() == fruitfrommarketpagetext.lower()):
+        found += 1
+    i += 1
+    if found == 2:
+         print ('Yay! Capture script correctly captured both fruits added to the cart')
